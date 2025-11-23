@@ -10,10 +10,29 @@ export const Navigation: React.FC = () => {
         { label: 'CONTACT', href: '#contact' }
     ];
 
+    const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+        e.preventDefault();
+        const targetId = href.replace('#', '');
+        const element = document.getElementById(targetId);
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+        }
+        setIsOpen(false);
+    };
+
+    const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
   return (
     <nav className="sticky top-0 z-50 bg-zinc-950/80 backdrop-blur-md border-b border-zinc-800">
       <div className="flex justify-between items-center h-16 px-6 md:px-12">
-        <a href="#" className="font-bold text-xl tracking-tighter text-zinc-100 hover:text-emerald-500 transition-colors">
+        <a 
+            href="#" 
+            onClick={handleLogoClick}
+            className="font-bold text-xl tracking-tighter text-zinc-100 hover:text-emerald-500 transition-colors"
+        >
             ZDEV<span className="text-emerald-500">.</span>
         </a>
 
@@ -23,6 +42,7 @@ export const Navigation: React.FC = () => {
                 <a 
                     key={link.label}
                     href={link.href} 
+                    onClick={(e) => handleNavClick(e, link.href)}
                     className="text-xs font-mono text-zinc-400 hover:text-emerald-400 transition-colors tracking-widest"
                 >
                     {link.label}
@@ -46,7 +66,7 @@ export const Navigation: React.FC = () => {
                 <a 
                     key={link.label}
                     href={link.href} 
-                    onClick={() => setIsOpen(false)}
+                    onClick={(e) => handleNavClick(e, link.href)}
                     className="text-sm font-mono text-zinc-400 hover:text-emerald-400 transition-colors tracking-widest"
                 >
                     {link.label}
